@@ -38,6 +38,7 @@
             color: var(--light);
             line-height: 1.6;
             overflow-x: hidden;
+            transition: background 0.5s ease;
         }
 
         /* Стилизация скроллбара */
@@ -53,6 +54,160 @@
             background: var(--primary);
             border-radius: 4px;
         }
+
+        /* Админ-панель */
+        .admin-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid var(--glass);
+            z-index: 2000;
+            transition: right 0.4s ease;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .admin-panel.open {
+            right: 0;
+        }
+
+        .admin-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 2001;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .admin-toggle:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+
+        .admin-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--glass);
+        }
+
+        .admin-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .admin-form-group {
+            margin-bottom: 1rem;
+        }
+
+        .admin-form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+            font-weight: 500;
+        }
+
+        .admin-form-control {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass);
+            border-radius: 8px;
+            color: var(--light);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .admin-form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .admin-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .admin-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .admin-btn-secondary {
+            background: var(--secondary);
+        }
+
+        .admin-btn-secondary:hover {
+            background: #475569;
+        }
+
+        .color-preview {
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-left: 10px;
+            border: 2px solid var(--glass);
+        }
+
+        .image-preview {
+            width: 100%;
+            max-height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .gallery-item-admin {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .gallery-item-admin img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .gallery-item-admin .delete-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(220, 38, 38, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+        }
+
+        /* Остальные стили остаются без изменений */
+        /* ... (все предыдущие стили для навигации, секций и т.д.) ... */
 
         /* Навигация */
         .navbar {
@@ -649,12 +804,40 @@
             border-radius: 12px;
             overflow: hidden;
             margin-top: 1rem;
+            margin-bottom: 2rem;
         }
 
         .map-container iframe {
             width: 100%;
             height: 100%;
             border: none;
+        }
+
+        /* Parking Section */
+        .parking-section {
+            margin-top: 2rem;
+        }
+
+        .parking-image {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .parking-image:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .parking-caption {
+            text-align: center;
+            color: var(--gray);
+            margin-top: 1rem;
+            font-size: 0.9rem;
         }
 
         /* Footer */
@@ -746,6 +929,10 @@
             .hero-subtitle {
                 font-size: 1.3rem;
             }
+            
+            .admin-panel {
+                width: 350px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -813,6 +1000,17 @@
             .contact-info {
                 grid-template-columns: 1fr;
             }
+            
+            .admin-panel {
+                width: 100%;
+                right: -100%;
+            }
+            
+            .admin-toggle {
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -836,6 +1034,109 @@
     </style>
 </head>
 <body>
+    <!-- Кнопка админки -->
+    <button class="admin-toggle" id="adminToggle">
+        <i class="fas fa-cog"></i>
+    </button>
+
+    <!-- Админ-панель -->
+    <div class="admin-panel" id="adminPanel">
+        <h2 style="color: var(--primary); margin-bottom: 1.5rem;">Панель управления</h2>
+        
+        <!-- Управление фоном -->
+        <div class="admin-section">
+            <h3>Фон сайта</h3>
+            <div class="admin-form-group">
+                <label>Цвет фона:</label>
+                <input type="color" id="bgColor" class="admin-form-control" value="#0f172a">
+                <span class="color-preview" id="bgColorPreview" style="background: #0f172a;"></span>
+            </div>
+            <div class="admin-form-group">
+                <label>Градиент фона:</label>
+                <input type="color" id="bgGradient" class="admin-form-control" value="#1e293b">
+                <span class="color-preview" id="bgGradientPreview" style="background: #1e293b;"></span>
+            </div>
+            <button class="admin-btn" id="applyBackground">Применить фон</button>
+        </div>
+
+        <!-- Управление главной секцией -->
+        <div class="admin-section">
+            <h3>Главная секция</h3>
+            <div class="admin-form-group">
+                <label>Заголовок (цитата):</label>
+                <input type="text" id="heroBadge" class="admin-form-control" value="лучше своевременное обслуживание чем дорогостоящий ремонт">
+            </div>
+            <div class="admin-form-group">
+                <label>Описание:</label>
+                <textarea id="heroSubtitle" class="admin-form-control" rows="3">Профессиональный уход для вашего автомобиля. Современные технологии, квалифицированные специалисты и гарантия качества на все виды работ</textarea>
+            </div>
+            <div class="admin-form-group">
+                <label>Текст кнопки 1:</label>
+                <input type="text" id="btn1Text" class="admin-form-control" value="Наши услуги">
+            </div>
+            <div class="admin-form-group">
+                <label>Текст кнопки 2:</label>
+                <input type="text" id="btn2Text" class="admin-form-control" value="Записаться онлайн">
+            </div>
+            <button class="admin-btn" id="applyHero">Применить изменения</button>
+        </div>
+
+        <!-- Управление услугами -->
+        <div class="admin-section">
+            <h3>Услуги</h3>
+            <div id="servicesAdmin">
+                <!-- Динамически генерируемые поля для услуг -->
+            </div>
+            <button class="admin-btn admin-btn-secondary" id="addService">Добавить услугу</button>
+        </div>
+
+        <!-- Управление галереей -->
+        <div class="admin-section">
+            <h3>Галерея</h3>
+            <div class="admin-form-group">
+                <label>Добавить фото в галерею:</label>
+                <input type="file" id="galleryUpload" class="admin-form-control" accept="image/*" multiple>
+                <img id="galleryPreview" class="image-preview">
+            </div>
+            <button class="admin-btn" id="uploadGallery">Загрузить фото</button>
+            
+            <div id="galleryAdmin" style="margin-top: 1rem;">
+                <!-- Динамически генерируемые элементы галереи -->
+            </div>
+        </div>
+
+        <!-- Управление контактами -->
+        <div class="admin-section">
+            <h3>Контакты</h3>
+            <div class="admin-form-group">
+                <label>Адрес:</label>
+                <input type="text" id="contactAddress" class="admin-form-control" value="Петровская коса, 1Р, Санкт-Петербург">
+            </div>
+            <div class="admin-form-group">
+                <label>Телефон:</label>
+                <input type="text" id="contactPhone" class="admin-form-control" value="+7 (812) 235-02-35">
+            </div>
+            <div class="admin-form-group">
+                <label>Email:</label>
+                <input type="email" id="contactEmail" class="admin-form-control" value="info@kommik.ru">
+            </div>
+            <div class="admin-form-group">
+                <label>Схема парковки:</label>
+                <input type="file" id="parkingUpload" class="admin-form-control" accept="image/*">
+                <img id="parkingPreview" class="image-preview">
+            </div>
+            <button class="admin-btn" id="applyContacts">Применить контакты</button>
+        </div>
+
+        <!-- Сброс настроек -->
+        <div class="admin-section">
+            <h3>Система</h3>
+            <button class="admin-btn admin-btn-secondary" id="resetSettings">Сбросить настройки</button>
+            <button class="admin-btn" id="saveSettings">Сохранить все настройки</button>
+        </div>
+    </div>
+
+    <!-- Остальная часть сайта -->
     <!-- Навигация -->
     <nav class="navbar">
         <div class="nav-container">
@@ -867,14 +1168,14 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content animate-fade-in-up">
-            <div class="hero-badge">лучше своевременное обслуживание чем дорогостоящий ремонт</div>
-            <p class="hero-subtitle">Профессиональный уход для вашего автомобиля. Современные технологии, квалифицированные специалисты и гарантия качества на все виды работ</p>
+            <div class="hero-badge" id="heroBadgeElement">лучше своевременное обслуживание чем дорогостоящий ремонт</div>
+            <p class="hero-subtitle" id="heroSubtitleElement">Профессиональный уход для вашего автомобиля. Современные технологии, квалифицированные специалисты и гарантия качества на все виды работ</p>
             <div class="hero-cta">
-                <a href="#services" class="btn btn-primary">
-                    <i class="fas fa-list"></i> Наши услуги
+                <a href="#services" class="btn btn-primary" id="btn1Element">
+                    <i class="fas fa-list"></i> <span id="btn1TextElement">Наши услуги</span>
                 </a>
-                <a href="#contact" class="btn btn-secondary">
-                    <i class="fas fa-phone"></i> Записаться онлайн
+                <a href="#contact" class="btn btn-secondary" id="btn2Element">
+                    <i class="fas fa-phone"></i> <span id="btn2TextElement">Записаться онлайн</span>
                 </a>
             </div>
         </div>
@@ -882,70 +1183,16 @@
 
     <!-- Services Section -->
     <section id="services">
-        <div class="services-grid">
-            <div class="service-card animate-fade-in-up delay-100">
-                <div class="service-icon">
-                    <i class="fas fa-car-crash"></i>
-                </div>
-                <h3 class="service-title">Стапельные работы</h3>
-                <p class="service-description">Восстановление геометрии кузова после ДТП с использованием современного оборудования</p>
-            </div>
-            
-            <div class="service-card animate-fade-in-up delay-200">
-                <div class="service-icon">
-                    <i class="fas fa-paint-roller"></i>
-                </div>
-                <h3 class="service-title">Покраска автомобиля</h3>
-                <p class="service-description">Профессиональная покраска в камере с гарантией долговечности и качества</p>
-            </div>
-            
-            <div class="service-card animate-fade-in-up delay-300">
-                <div class="service-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <h3 class="service-title">Антикоррозийная обработка</h3>
-                <p class="service-description">Надежная защита кузова от коррозии с использованием сертифицированных материалов</p>
-            </div>
-            
-            <div class="service-card animate-fade-in-up delay-100">
-                <div class="service-icon">
-                    <i class="fas fa-car-wash"></i>
-                </div>
-                <h3 class="service-title">Мойка автомобиля</h3>
-                <p class="service-description">Комплексная мойка и химчистка с использованием профессиональной химии</p>
-            </div>
-            
-            <div class="service-card animate-fade-in-up delay-200">
-                <div class="service-icon">
-                    <i class="fas fa-laptop-code"></i>
-                </div>
-                <h3 class="service-title">Компьютерная диагностика</h3>
-                <p class="service-description">Точная диагностика электронных систем с использованием современного оборудования</p>
-            </div>
-            
-            <div class="service-card animate-fade-in-up delay-300">
-                <div class="service-icon">
-                    <i class="fas fa-tools"></i>
-                </div>
-                <h3 class="service-title">Шиномонтаж</h3>
-                <p class="service-description">Сезонная замена и ремонт шин на современном оборудовании</p>
-            </div>
-            
-            <div class="service-card animate-fade-in-up delay-100">
-                <div class="service-icon">
-                    <i class="fas fa-cogs"></i>
-                </div>
-                <h3 class="service-title">Развал-схождение</h3>
-                <p class="service-description">Регулировка углов установки колес для оптимальной управляемости</p>
-            </div>
-            
-            <div class="service-card animate-fade-in-up delay-200">
-                <div class="service-icon">
-                    <i class="fas fa-wind"></i>
-                </div>
-                <h3 class="service-title">Заправка кондиционера</h3>
-                <p class="service-description">Заправка и диагностика системы кондиционирования автомобиля</p>
-            </div>
+        <div class="services-grid" id="servicesGrid">
+            <!-- Услуги будут добавляться динамически -->
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery-section">
+        <h2 class="section-title animate-fade-in-up">Галерея</h2>
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Галерея будет заполняться динамически -->
         </div>
     </section>
 
@@ -971,6 +1218,7 @@
         
         <div class="reviews-container">
             <div class="reviews-grid">
+                <!-- Отзывы остаются статичными для примера -->
                 <div class="review-card animate-fade-in-up delay-100">
                     <div class="review-header">
                         <div class="reviewer-info">
@@ -1034,60 +1282,6 @@
                         <span class="review-likes">1</span>
                     </div>
                 </div>
-
-                <div class="review-card animate-fade-in-up delay-100">
-                    <div class="review-header">
-                        <div class="reviewer-info">
-                            <div class="reviewer-avatar">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="reviewer-details">
-                                <div class="reviewer-name">Сергей Ландик</div>
-                                <div class="reviewer-badge">Знаток города 15 уровня</div>
-                            </div>
-                        </div>
-                        <div class="review-date">15 апреля 2024</div>
-                    </div>
-                    <div class="review-content">
-                        <p>Отличный автосервис! Быстро и качественно выполнили ремонт. Персонал вежливый, цены адекватные. Теперь только сюда!</p>
-                    </div>
-                </div>
-
-                <div class="review-card animate-fade-in-up delay-200">
-                    <div class="review-header">
-                        <div class="reviewer-info">
-                            <div class="reviewer-avatar">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="reviewer-details">
-                                <div class="reviewer-name">Анастасия Романюк</div>
-                                <div class="reviewer-badge">Знаток города 5 уровня</div>
-                            </div>
-                        </div>
-                        <div class="review-date">10 марта 2024</div>
-                    </div>
-                    <div class="review-content">
-                        <p>Очень довольна обслуживанием. Помогли срочно отремонтировать машину перед поездкой. Спасибо за оперативность и качество!</p>
-                    </div>
-                </div>
-
-                <div class="review-card animate-fade-in-up delay-300">
-                    <div class="review-header">
-                        <div class="reviewer-info">
-                            <div class="reviewer-avatar">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="reviewer-details">
-                                <div class="reviewer-name">Дарья Г.</div>
-                                <div class="reviewer-badge">Знаток города 4 уровня</div>
-                            </div>
-                        </div>
-                        <div class="review-date">5 февраля 2024</div>
-                    </div>
-                    <div class="review-content">
-                        <p>Лучший сервис в городе! Честные цены, профессиональные мастера. Всегда все объяснят, покажут. Рекомендую всем!</p>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -1108,12 +1302,21 @@
                         </div>
                         <div class="info-content">
                             <div class="info-label">Наш адрес</div>
-                            <div class="info-value">Петровская коса, 1Р, Санкт-Петербург</div>
+                            <div class="info-value" id="contactAddressElement">Петровская коса, 1Р, Санкт-Петербург</div>
                         </div>
                     </div>
                     
                     <div class="map-container">
                         <iframe src="https://yandex.ru/map-widget/v1/?ll=30.253193%2C59.962939&z=16&pt=30.253193%2C59.962939,pm2dml&l=map"></iframe>
+                    </div>
+
+                    <!-- Схема парковки -->
+                    <div class="parking-section">
+                        <h3 class="info-title">
+                            <i class="fas fa-parking"></i> Схема парковки
+                        </h3>
+                        <img src="https://disk.yandex.ru/i/1sgt3rOhAHJUAw" alt="Схема парковки возле сервиса КОММИК" class="parking-image" id="parkingImage">
+                        <p class="parking-caption">Схема парковки возле сервиса "Коммик" на Петровской косе, 1Р</p>
                     </div>
                 </div>
                 
@@ -1154,7 +1357,7 @@
                         </div>
                         <div class="info-content">
                             <div class="info-label">Телефон</div>
-                            <div class="info-value">+7 (812) 235-02-35</div>
+                            <div class="info-value" id="contactPhoneElement">+7 (812) 235-02-35</div>
                         </div>
                     </div>
                     
@@ -1164,7 +1367,7 @@
                         </div>
                         <div class="info-content">
                             <div class="info-label">Email</div>
-                            <div class="info-value">info@kommik.ru</div>
+                            <div class="info-value" id="contactEmailElement">info@kommik.ru</div>
                         </div>
                     </div>
                 </div>
@@ -1182,21 +1385,17 @@
             
             <div class="footer-col">
                 <h3>Услуги</h3>
-                <ul class="footer-links">
-                    <li><a href="#services">Стапельные работы</a></li>
-                    <li><a href="#services">Покраска автомобиля</a></li>
-                    <li><a href="#services">Антикоррозийная обработка</a></li>
-                    <li><a href="#services">Компьютерная диагностика</a></li>
-                    <li><a href="#services">Шиномонтаж</a></li>
+                <ul class="footer-links" id="footerServices">
+                    <!-- Ссылки на услуги будут добавляться динамически -->
                 </ul>
             </div>
             
             <div class="footer-col">
                 <h3>Контакты</h3>
                 <ul class="footer-links">
-                    <li><a href="#contact"><i class="fas fa-map-marker-alt"></i> Петровская коса, 1Р</a></li>
-                    <li><a href="#contact"><i class="fas fa-phone"></i> +7 (812) 235-02-35</a></li>
-                    <li><a href="#contact"><i class="fas fa-envelope"></i> info@kommik.ru</a></li>
+                    <li><a href="#contact"><i class="fas fa-map-marker-alt"></i> <span id="footerAddress">Петровская коса, 1Р</span></a></li>
+                    <li><a href="#contact"><i class="fas fa-phone"></i> <span id="footerPhone">+7 (812) 235-02-35</span></a></li>
+                    <li><a href="#contact"><i class="fas fa-envelope"></i> <span id="footerEmail">info@kommik.ru</span></a></li>
                 </ul>
             </div>
             
@@ -1216,54 +1415,460 @@
     </footer>
 
     <script>
-        // Анимация появления элементов при скролле
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Наблюдаем за всеми элементами с анимацией
-        document.querySelectorAll('.animate-fade-in-up').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
-        });
-
-        // Фиксация навигации при скролле
-        window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.navbar');
-            const quickNav = document.querySelector('.quick-nav');
+        // ==================== АДМИН-ПАНЕЛЬ ====================
+        
+        // Элементы админ-панели
+        const adminToggle = document.getElementById('adminToggle');
+        const adminPanel = document.getElementById('adminPanel');
+        
+        // Переменные для хранения данных
+        let services = [];
+        let galleryImages = [];
+        
+        // Функции для работы с localStorage
+        function saveToLocalStorage(key, data) {
+            localStorage.setItem(key, JSON.stringify(data));
+        }
+        
+        function loadFromLocalStorage(key) {
+            const data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : null;
+        }
+        
+        // Инициализация данных
+        function initData() {
+            // Загрузка данных из localStorage или установка значений по умолчанию
+            const savedServices = loadFromLocalStorage('kommikServices');
+            const savedGallery = loadFromLocalStorage('kommikGallery');
+            const savedHero = loadFromLocalStorage('kommikHero');
+            const savedContacts = loadFromLocalStorage('kommikContacts');
+            const savedBackground = loadFromLocalStorage('kommikBackground');
             
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-                quickNav.style.top = '60px';
+            // Услуги по умолчанию
+            if (!savedServices) {
+                services = [
+                    { icon: 'fa-car-crash', title: 'Стапельные работы', description: 'Восстановление геометрии кузова после ДТП с использованием современного оборудования' },
+                    { icon: 'fa-paint-roller', title: 'Покраска автомобиля', description: 'Профессиональная покраска в камере с гарантией долговечности и качества' },
+                    { icon: 'fa-shield-alt', title: 'Антикоррозийная обработка', description: 'Надежная защита кузова от коррозии с использованием сертифицированных материалов' },
+                    { icon: 'fa-car-wash', title: 'Мойка автомобиля', description: 'Комплексная мойка и химчистка с использованием профессиональной химии' },
+                    { icon: 'fa-laptop-code', title: 'Компьютерная диагностика', description: 'Точная диагностика электронных систем с использованием современного оборудования' },
+                    { icon: 'fa-tools', title: 'Шиномонтаж', description: 'Сезонная замена и ремонт шин на современном оборудовании' },
+                    { icon: 'fa-cogs', title: 'Развал-схождение', description: 'Регулировка углов установки колес для оптимальной управляемости' },
+                    { icon: 'fa-wind', title: 'Заправка кондиционера', description: 'Заправка и диагностика системы кондиционирования автомобиля' }
+                ];
+                saveToLocalStorage('kommikServices', services);
             } else {
-                navbar.classList.remove('scrolled');
-                quickNav.style.top = '80px';
+                services = savedServices;
+            }
+            
+            // Галерея по умолчанию
+            if (!savedGallery) {
+                galleryImages = [
+                    'https://images.unsplash.com/photo-1626887220972-6bfa78e204bc?ixlib=rb-4.0.3&w=400&h=300&fit=crop&q=80',
+                    'https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&w=400&h=300&fit=crop&q=80',
+                    'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&w=400&h=300&fit=crop&q=80',
+                    'https://images.unsplash.com/photo-1553440569-bcc63803a83d?ixlib=rb-4.0.3&w=400&h=300&fit=crop&q=80'
+                ];
+                saveToLocalStorage('kommikGallery', galleryImages);
+            } else {
+                galleryImages = savedGallery;
+            }
+            
+            // Главная секция
+            if (savedHero) {
+                document.getElementById('heroBadge').value = savedHero.badge;
+                document.getElementById('heroSubtitle').value = savedHero.subtitle;
+                document.getElementById('btn1Text').value = savedHero.btn1;
+                document.getElementById('btn2Text').value = savedHero.btn2;
+                
+                document.getElementById('heroBadgeElement').textContent = savedHero.badge;
+                document.getElementById('heroSubtitleElement').textContent = savedHero.subtitle;
+                document.getElementById('btn1TextElement').textContent = savedHero.btn1;
+                document.getElementById('btn2TextElement').textContent = savedHero.btn2;
+            }
+            
+            // Контакты
+            if (savedContacts) {
+                document.getElementById('contactAddress').value = savedContacts.address;
+                document.getElementById('contactPhone').value = savedContacts.phone;
+                document.getElementById('contactEmail').value = savedContacts.email;
+                
+                document.getElementById('contactAddressElement').textContent = savedContacts.address;
+                document.getElementById('contactPhoneElement').textContent = savedContacts.phone;
+                document.getElementById('contactEmailElement').textContent = savedContacts.email;
+                document.getElementById('footerAddress').textContent = savedContacts.address.split(',')[0];
+                document.getElementById('footerPhone').textContent = savedContacts.phone;
+                document.getElementById('footerEmail').textContent = savedContacts.email;
+            }
+            
+            // Фон
+            if (savedBackground) {
+                document.getElementById('bgColor').value = savedBackground.color;
+                document.getElementById('bgGradient').value = savedBackground.gradient;
+                document.getElementById('bgColorPreview').style.background = savedBackground.color;
+                document.getElementById('bgGradientPreview').style.background = savedBackground.gradient;
+                
+                applyBackground(savedBackground.color, savedBackground.gradient);
+            }
+            
+            // Инициализация интерфейса
+            renderServicesAdmin();
+            renderServices();
+            renderGalleryAdmin();
+            renderGallery();
+            renderFooterServices();
+        }
+        
+        // Открытие/закрытие админ-панели
+        adminToggle.addEventListener('click', () => {
+            adminPanel.classList.toggle('open');
+        });
+        
+        // ==================== УПРАВЛЕНИЕ ФОНОМ ====================
+        
+        document.getElementById('applyBackground').addEventListener('click', () => {
+            const bgColor = document.getElementById('bgColor').value;
+            const bgGradient = document.getElementById('bgGradient').value;
+            
+            applyBackground(bgColor, bgGradient);
+            
+            // Сохранение в localStorage
+            saveToLocalStorage('kommikBackground', {
+                color: bgColor,
+                gradient: bgGradient
+            });
+        });
+        
+        function applyBackground(color, gradient) {
+            document.body.style.background = `linear-gradient(135deg, ${color} 0%, ${gradient} 100%)`;
+            document.getElementById('bgColorPreview').style.background = color;
+            document.getElementById('bgGradientPreview').style.background = gradient;
+        }
+        
+        // ==================== УПРАВЛЕНИЕ ГЛАВНОЙ СЕКЦИЕЙ ====================
+        
+        document.getElementById('applyHero').addEventListener('click', () => {
+            const badge = document.getElementById('heroBadge').value;
+            const subtitle = document.getElementById('heroSubtitle').value;
+            const btn1 = document.getElementById('btn1Text').value;
+            const btn2 = document.getElementById('btn2Text').value;
+            
+            document.getElementById('heroBadgeElement').textContent = badge;
+            document.getElementById('heroSubtitleElement').textContent = subtitle;
+            document.getElementById('btn1TextElement').textContent = btn1;
+            document.getElementById('btn2TextElement').textContent = btn2;
+            
+            // Сохранение в localStorage
+            saveToLocalStorage('kommikHero', {
+                badge,
+                subtitle,
+                btn1,
+                btn2
+            });
+        });
+        
+        // ==================== УПРАВЛЕНИЕ УСЛУГАМИ ====================
+        
+        function renderServicesAdmin() {
+            const container = document.getElementById('servicesAdmin');
+            container.innerHTML = '';
+            
+            services.forEach((service, index) => {
+                const serviceDiv = document.createElement('div');
+                serviceDiv.className = 'admin-form-group';
+                serviceDiv.innerHTML = `
+                    <label>Услуга ${index + 1}:</label>
+                    <input type="text" class="admin-form-control service-title" value="${service.title}" data-index="${index}">
+                    <textarea class="admin-form-control service-description" rows="2" data-index="${index}">${service.description}</textarea>
+                    <select class="admin-form-control service-icon" data-index="${index}">
+                        <option value="fa-car-crash" ${service.icon === 'fa-car-crash' ? 'selected' : ''}>🚗 Стапель</option>
+                        <option value="fa-paint-roller" ${service.icon === 'fa-paint-roller' ? 'selected' : ''}>🎨 Покраска</option>
+                        <option value="fa-shield-alt" ${service.icon === 'fa-shield-alt' ? 'selected' : ''}>🛡️ Защита</option>
+                        <option value="fa-car-wash" ${service.icon === 'fa-car-wash' ? 'selected' : ''}>🧼 Мойка</option>
+                        <option value="fa-laptop-code" ${service.icon === 'fa-laptop-code' ? 'selected' : ''}>💻 Диагностика</option>
+                        <option value="fa-tools" ${service.icon === 'fa-tools' ? 'selected' : ''}>🔧 Шиномонтаж</option>
+                        <option value="fa-cogs" ${service.icon === 'fa-cogs' ? 'selected' : ''}>⚙️ Развал-схождение</option>
+                        <option value="fa-wind" ${service.icon === 'fa-wind' ? 'selected' : ''}>❄️ Кондиционер</option>
+                    </select>
+                    <button class="admin-btn admin-btn-secondary delete-service" data-index="${index}">Удалить услугу</button>
+                `;
+                container.appendChild(serviceDiv);
+            });
+            
+            // Обработчики событий для динамически созданных элементов
+            document.querySelectorAll('.service-title').forEach(input => {
+                input.addEventListener('change', (e) => {
+                    const index = e.target.dataset.index;
+                    services[index].title = e.target.value;
+                    saveToLocalStorage('kommikServices', services);
+                    renderServices();
+                    renderFooterServices();
+                });
+            });
+            
+            document.querySelectorAll('.service-description').forEach(textarea => {
+                textarea.addEventListener('change', (e) => {
+                    const index = e.target.dataset.index;
+                    services[index].description = e.target.value;
+                    saveToLocalStorage('kommikServices', services);
+                    renderServices();
+                });
+            });
+            
+            document.querySelectorAll('.service-icon').forEach(select => {
+                select.addEventListener('change', (e) => {
+                    const index = e.target.dataset.index;
+                    services[index].icon = e.target.value;
+                    saveToLocalStorage('kommikServices', services);
+                    renderServices();
+                });
+            });
+            
+            document.querySelectorAll('.delete-service').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const index = e.target.dataset.index;
+                    services.splice(index, 1);
+                    saveToLocalStorage('kommikServices', services);
+                    renderServicesAdmin();
+                    renderServices();
+                    renderFooterServices();
+                });
+            });
+        }
+        
+        function renderServices() {
+            const container = document.getElementById('servicesGrid');
+            container.innerHTML = '';
+            
+            services.forEach((service, index) => {
+                const serviceCard = document.createElement('div');
+                serviceCard.className = `service-card animate-fade-in-up delay-${(index % 3) * 100 + 100}`;
+                serviceCard.innerHTML = `
+                    <div class="service-icon">
+                        <i class="fas ${service.icon}"></i>
+                    </div>
+                    <h3 class="service-title">${service.title}</h3>
+                    <p class="service-description">${service.description}</p>
+                `;
+                container.appendChild(serviceCard);
+            });
+        }
+        
+        function renderFooterServices() {
+            const container = document.getElementById('footerServices');
+            container.innerHTML = '';
+            
+            // Добавляем только первые 5 услуг в футер
+            services.slice(0, 5).forEach(service => {
+                const li = document.createElement('li');
+                li.innerHTML = `<a href="#services">${service.title}</a>`;
+                container.appendChild(li);
+            });
+        }
+        
+        document.getElementById('addService').addEventListener('click', () => {
+            services.push({
+                icon: 'fa-tools',
+                title: 'Новая услуга',
+                description: 'Описание новой услуги'
+            });
+            saveToLocalStorage('kommikServices', services);
+            renderServicesAdmin();
+            renderServices();
+            renderFooterServices();
+        });
+        
+        // ==================== УПРАВЛЕНИЕ ГАЛЕРЕЕЙ ====================
+        
+        function renderGalleryAdmin() {
+            const container = document.getElementById('galleryAdmin');
+            container.innerHTML = '';
+            
+            galleryImages.forEach((image, index) => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item-admin';
+                galleryItem.innerHTML = `
+                    <img src="${image}" alt="Галерея ${index + 1}">
+                    <button class="delete-btn" data-index="${index}">×</button>
+                `;
+                container.appendChild(galleryItem);
+            });
+            
+            // Обработчики для кнопок удаления
+            document.querySelectorAll('.gallery-item-admin .delete-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const index = e.target.dataset.index;
+                    galleryImages.splice(index, 1);
+                    saveToLocalStorage('kommikGallery', galleryImages);
+                    renderGalleryAdmin();
+                    renderGallery();
+                });
+            });
+        }
+        
+        function renderGallery() {
+            const container = document.getElementById('galleryGrid');
+            container.innerHTML = '';
+            
+            galleryImages.forEach((image, index) => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = `gallery-item animate-fade-in-up delay-${(index % 4) * 100 + 100}`;
+                galleryItem.innerHTML = `
+                    <img src="${image}" alt="Работа ${index + 1}">
+                    <div class="gallery-overlay">
+                        <h3>Работа ${index + 1}</h3>
+                        <p>Пример выполненной работы</p>
+                    </div>
+                `;
+                container.appendChild(galleryItem);
+            });
+        }
+        
+        document.getElementById('uploadGallery').addEventListener('click', () => {
+            const fileInput = document.getElementById('galleryUpload');
+            const files = fileInput.files;
+            
+            if (files.length === 0) {
+                alert('Пожалуйста, выберите хотя бы одно фото');
+                return;
+            }
+            
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                if (!file.type.match('image.*')) {
+                    alert('Пожалуйста, выбирайте только изображения');
+                    continue;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    galleryImages.push(e.target.result);
+                    saveToLocalStorage('kommikGallery', galleryImages);
+                    renderGalleryAdmin();
+                    renderGallery();
+                };
+                reader.readAsDataURL(file);
+            }
+            
+            fileInput.value = '';
+        });
+        
+        // Превью изображения галереи
+        document.getElementById('galleryUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('galleryPreview').src = e.target.result;
+                    document.getElementById('galleryPreview').style.display = 'block';
+                };
+                reader.readAsDataURL(file);
             }
         });
+        
+        // ==================== УПРАВЛЕНИЕ КОНТАКТАМИ ====================
+        
+        document.getElementById('applyContacts').addEventListener('click', () => {
+            const address = document.getElementById('contactAddress').value;
+            const phone = document.getElementById('contactPhone').value;
+            const email = document.getElementById('contactEmail').value;
+            
+            document.getElementById('contactAddressElement').textContent = address;
+            document.getElementById('contactPhoneElement').textContent = phone;
+            document.getElementById('contactEmailElement').textContent = email;
+            document.getElementById('footerAddress').textContent = address.split(',')[0];
+            document.getElementById('footerPhone').textContent = phone;
+            document.getElementById('footerEmail').textContent = email;
+            
+            // Сохранение в localStorage
+            saveToLocalStorage('kommikContacts', {
+                address,
+                phone,
+                email
+            });
+        });
+        
+        // Управление схемой парковки
+        document.getElementById('parkingUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('parkingImage').src = e.target.result;
+                    document.getElementById('parkingPreview').src = e.target.result;
+                    document.getElementById('parkingPreview').style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // ==================== СИСТЕМНЫЕ ФУНКЦИИ ====================
+        
+        document.getElementById('resetSettings').addEventListener('click', () => {
+            if (confirm('Вы уверены, что хотите сбросить все настройки к значениям по умолчанию?')) {
+                localStorage.clear();
+                location.reload();
+            }
+        });
+        
+        document.getElementById('saveSettings').addEventListener('click', () => {
+            alert('Все настройки сохранены!');
+        });
+        
+        // ==================== ИНИЦИАЛИЗАЦИЯ ====================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            initData();
+            
+            // Анимация появления элементов при скролле
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
 
-        // Плавная прокрутка к якорям
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Наблюдаем за всеми элементами с анимацией
+            document.querySelectorAll('.animate-fade-in-up').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+
+            // Фиксация навигации при скролле
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                const quickNav = document.querySelector('.quick-nav');
+                
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                    quickNav.style.top = '60px';
+                } else {
+                    navbar.classList.remove('scrolled');
+                    quickNav.style.top = '80px';
                 }
+            });
+
+            // Плавная прокрутка к якорям
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
             });
         });
     </script>
