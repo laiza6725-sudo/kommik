@@ -163,6 +163,13 @@
             background: #475569;
         }
 
+        .admin-btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            width: auto;
+            margin: 0.25rem;
+        }
+
         .color-preview {
             width: 30px;
             height: 30px;
@@ -179,6 +186,15 @@
             border-radius: 8px;
             margin-top: 0.5rem;
             display: none;
+        }
+
+        .service-bg-preview {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            border: 2px solid var(--glass);
         }
 
         .gallery-item-admin {
@@ -204,6 +220,100 @@
             width: 25px;
             height: 25px;
             cursor: pointer;
+        }
+
+        /* Стили для карточек услуг с фоном */
+        .service-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.4s ease;
+            border: 1px solid var(--glass);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1/1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .service-card.has-bg-image {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .service-card.has-bg-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.7);
+            z-index: 1;
+        }
+
+        .service-card.has-bg-image .service-icon,
+        .service-card.has-bg-image .service-title,
+        .service-card.has-bg-image .service-description {
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-card.has-bg-image .service-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(220, 38, 38, 0.3);
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(220, 38, 38, 0.1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .service-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .service-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.5;
         }
 
         /* Остальные стили остаются без изменений */
@@ -455,70 +565,6 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
-        }
-
-        .service-card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 2rem;
-            transition: all 0.4s ease;
-            border: 1px solid var(--glass);
-            backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-            aspect-ratio: 1/1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-lg);
-            border-color: rgba(220, 38, 38, 0.3);
-        }
-
-        .service-card:hover::before {
-            opacity: 1;
-        }
-
-        .service-icon {
-            width: 70px;
-            height: 70px;
-            background: rgba(220, 38, 38, 0.1);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-            font-size: 1.8rem;
-        }
-
-        .service-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .service-description {
-            color: var(--gray);
-            font-size: 0.9rem;
-            line-height: 1.5;
         }
 
         /* Gallery Section */
@@ -1590,6 +1636,12 @@
                         <option value="fa-cogs" ${service.icon === 'fa-cogs' ? 'selected' : ''}>⚙️ Развал-схождение</option>
                         <option value="fa-wind" ${service.icon === 'fa-wind' ? 'selected' : ''}>❄️ Кондиционер</option>
                     </select>
+                    <div style="margin-top: 0.5rem;">
+                        <label style="font-size: 0.9rem;">Фоновое изображение:</label>
+                        <input type="file" class="admin-form-control service-bg-image" data-index="${index}" accept="image/*" style="font-size: 0.8rem; padding: 0.5rem;">
+                        ${service.backgroundImage ? `<img src="${service.backgroundImage}" class="service-bg-preview" data-index="${index}">` : ''}
+                        ${service.backgroundImage ? `<button type="button" class="admin-btn admin-btn-secondary admin-btn-small remove-bg-image" data-index="${index}">Удалить фон</button>` : ''}
+                    </div>
                     <button class="admin-btn admin-btn-secondary delete-service" data-index="${index}">Удалить услугу</button>
                 `;
                 container.appendChild(serviceDiv);
@@ -1624,6 +1676,34 @@
                 });
             });
             
+            // Обработчики для фоновых изображений
+            document.querySelectorAll('.service-bg-image').forEach(input => {
+                input.addEventListener('change', function(e) {
+                    const index = this.dataset.index;
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            services[index].backgroundImage = e.target.result;
+                            saveToLocalStorage('kommikServices', services);
+                            renderServicesAdmin();
+                            renderServices();
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.remove-bg-image').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const index = this.dataset.index;
+                    services[index].backgroundImage = null;
+                    saveToLocalStorage('kommikServices', services);
+                    renderServicesAdmin();
+                    renderServices();
+                });
+            });
+            
             document.querySelectorAll('.delete-service').forEach(button => {
                 button.addEventListener('click', (e) => {
                     const index = e.target.dataset.index;
@@ -1642,7 +1722,10 @@
             
             services.forEach((service, index) => {
                 const serviceCard = document.createElement('div');
-                serviceCard.className = `service-card animate-fade-in-up delay-${(index % 3) * 100 + 100}`;
+                const hasBgClass = service.backgroundImage ? 'has-bg-image' : '';
+                const bgStyle = service.backgroundImage ? `style="background-image: url('${service.backgroundImage}')"` : '';
+                
+                serviceCard.className = `service-card animate-fade-in-up delay-${(index % 3) * 100 + 100} ${hasBgClass}`;
                 serviceCard.innerHTML = `
                     <div class="service-icon">
                         <i class="fas ${service.icon}"></i>
@@ -1650,6 +1733,11 @@
                     <h3 class="service-title">${service.title}</h3>
                     <p class="service-description">${service.description}</p>
                 `;
+                
+                if (service.backgroundImage) {
+                    serviceCard.style.backgroundImage = `url('${service.backgroundImage}')`;
+                }
+                
                 container.appendChild(serviceCard);
             });
         }
@@ -1670,7 +1758,8 @@
             services.push({
                 icon: 'fa-tools',
                 title: 'Новая услуга',
-                description: 'Описание новой услуги'
+                description: 'Описание новой услуги',
+                backgroundImage: null
             });
             saveToLocalStorage('kommikServices', services);
             renderServicesAdmin();
