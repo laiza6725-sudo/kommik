@@ -16,40 +16,14 @@
             --primary-dark: #b91c1c;
             --secondary: #64748b;
             --accent: #f59e0b;
-            --dark: #0f172a;
-            --light: #f8fafc;
-            --gray: #94a3b8;
-            --success: #10b981;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --glass: rgba(255, 255, 255, 0.1);
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-
-        /* Светлая тема */
-        body.light-theme {
             --dark: #f8fafc;
             --light: #0f172a;
             --gray: #475569;
+            --success: #10b981;
             --card-bg: rgba(0, 0, 0, 0.05);
             --glass: rgba(0, 0, 0, 0.1);
-            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%) !important;
-        }
-
-        body.light-theme .navbar,
-        body.light-theme .top-bar,
-        body.light-theme footer {
-            background: rgba(248, 250, 252, 0.9) !important;
-            border-color: rgba(0, 0, 0, 0.1) !important;
-        }
-
-        body.light-theme .service-card,
-        body.light-theme .review-card,
-        body.light-theme .info-card,
-        body.light-theme .rating-badge,
-        body.light-theme .booking-form {
-            background: rgba(0, 0, 0, 0.05) !important;
-            border-color: rgba(0, 0, 0, 0.1) !important;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
 
         * {
@@ -60,7 +34,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
             color: var(--light);
             line-height: 1.6;
             overflow-x: hidden;
@@ -92,7 +66,7 @@
 
         /* Верхняя панель с контактами */
         .top-bar {
-            background: rgba(15, 23, 42, 0.9);
+            background: rgba(248, 250, 252, 0.9);
             padding: 0.5rem 0;
             border-bottom: 1px solid var(--glass);
             font-size: 0.9rem;
@@ -144,18 +118,13 @@
             right: -400px;
             width: 400px;
             height: 100vh;
-            background: rgba(15, 23, 42, 0.95);
+            background: rgba(248, 250, 252, 0.95);
             backdrop-filter: blur(20px);
             border-left: 1px solid var(--glass);
             z-index: 2000;
             transition: right 0.4s ease;
             overflow-y: auto;
             padding: 2rem;
-        }
-
-        body.light-theme .admin-panel {
-            background: rgba(248, 250, 252, 0.95);
-            border-left: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .admin-panel.open {
@@ -193,10 +162,6 @@
             border-bottom: 1px solid var(--glass);
         }
 
-        body.light-theme .admin-section {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
         .admin-section h3 {
             color: var(--primary);
             margin-bottom: 1rem;
@@ -214,24 +179,14 @@
             font-weight: 500;
         }
 
-        body.light-theme .admin-form-group label {
-            color: var(--light);
-        }
-
         .admin-form-control {
             width: 100%;
             padding: 0.75rem;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.1);
             border: 1px solid var(--glass);
             border-radius: 8px;
             color: var(--light);
             font-family: 'Inter', sans-serif;
-        }
-
-        body.light-theme .admin-form-control {
-            background: rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0, 0, 0, 0.2);
-            color: var(--light);
         }
 
         .admin-form-control:focus {
@@ -280,10 +235,6 @@
             border: 2px solid var(--glass);
         }
 
-        body.light-theme .color-preview {
-            border: 2px solid rgba(0, 0, 0, 0.2);
-        }
-
         .image-preview {
             width: 100%;
             max-height: 150px;
@@ -300,10 +251,6 @@
             border-radius: 8px;
             margin-top: 0.5rem;
             border: 2px solid var(--glass);
-        }
-
-        body.light-theme .service-bg-preview {
-            border: 2px solid rgba(0, 0, 0, 0.2);
         }
 
         .gallery-item-admin {
@@ -341,16 +288,11 @@
             flex: 1;
             text-align: center;
             padding: 0.75rem;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.1);
             border: 1px solid var(--glass);
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
-        }
-
-        body.light-theme .bg-type-option {
-            background: rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0, 0, 0, 0.2);
         }
 
         .bg-type-option.active {
@@ -359,10 +301,6 @@
         }
 
         .bg-type-option:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        body.light-theme .bg-type-option:hover {
             background: rgba(0, 0, 0, 0.2);
         }
 
@@ -380,49 +318,6 @@
             display: none;
         }
 
-        body.light-theme .bg-image-preview {
-            border: 2px solid rgba(0, 0, 0, 0.2);
-        }
-
-        .theme-selector {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .theme-option {
-            flex: 1;
-            text-align: center;
-            padding: 0.75rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--glass);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        body.light-theme .theme-option {
-            background: rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0, 0, 0, 0.2);
-        }
-
-        .theme-option.active {
-            background: var(--primary);
-            border-color: var(--primary);
-        }
-
-        .theme-option:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        body.light-theme .theme-option:hover {
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .theme-option.active:hover {
-            background: var(--primary-dark);
-        }
-
         /* Навигация */
         .navbar {
             position: fixed;
@@ -432,14 +327,14 @@
             z-index: 1000;
             padding: 1rem 0;
             transition: all 0.4s ease;
-            background: rgba(15, 23, 42, 0.8);
+            background: rgba(248, 250, 252, 0.8);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--glass);
         }
 
         .navbar.scrolled {
             padding: 0.8rem 0;
-            background: rgba(15, 23, 42, 0.95);
+            background: rgba(248, 250, 252, 0.95);
             box-shadow: var(--shadow);
         }
 
@@ -564,18 +459,12 @@
         .form-control {
             width: 100%;
             padding: 0.75rem;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.1);
             border: 1px solid var(--glass);
             border-radius: 8px;
             color: var(--light);
             font-family: 'Inter', sans-serif;
             transition: all 0.3s ease;
-        }
-
-        body.light-theme .form-control {
-            background: rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0, 0, 0, 0.2);
-            color: var(--light);
         }
 
         .form-control:focus {
@@ -690,19 +579,9 @@
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.05);
             transform: translateY(-2px);
             box-shadow: var(--shadow);
-        }
-
-        body.light-theme .btn-secondary {
-            background: transparent;
-            color: var(--light);
-            border: 1px solid var(--gray);
-        }
-
-        body.light-theme .btn-secondary:hover {
-            background: rgba(0, 0, 0, 0.05);
         }
 
         /* Sections */
@@ -720,10 +599,6 @@
 
         /* Booking Section */
         .booking-section {
-            background: rgba(15, 23, 42, 0.5);
-        }
-
-        body.light-theme .booking-section {
             background: rgba(241, 245, 249, 0.5);
         }
 
@@ -767,12 +642,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(15, 23, 42, 0.7);
-            z-index: 1;
-        }
-
-        body.light-theme .service-card.has-bg-image::before {
             background: rgba(248, 250, 252, 0.7);
+            z-index: 1;
         }
 
         .service-card.has-bg-image .service-icon,
@@ -783,7 +654,7 @@
         }
 
         .service-card.has-bg-image .service-icon {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.2);
             color: white;
         }
 
@@ -837,13 +708,9 @@
 
         /* Gallery Section - Горизонтальный слайдер */
         .gallery-section {
-            background: rgba(15, 23, 42, 0.5);
+            background: rgba(241, 245, 249, 0.5);
             overflow: hidden;
             position: relative;
-        }
-
-        body.light-theme .gallery-section {
-            background: rgba(241, 245, 249, 0.5);
         }
 
         .gallery-container {
@@ -901,14 +768,10 @@
             left: 0;
             width: 100%;
             padding: 1rem;
-            background: linear-gradient(transparent, rgba(15, 23, 42, 0.9));
+            background: linear-gradient(transparent, rgba(248, 250, 252, 0.9));
             opacity: 0;
             transition: all 0.4s ease;
             transform: translateY(10px);
-        }
-
-        body.light-theme .gallery-overlay {
-            background: linear-gradient(transparent, rgba(248, 250, 252, 0.9));
         }
 
         .gallery-item:hover .gallery-overlay {
@@ -950,12 +813,8 @@
 
         /* Reviews Section */
         .reviews-section {
-            background: rgba(15, 23, 42, 0.5);
-            position: relative;
-        }
-
-        body.light-theme .reviews-section {
             background: rgba(241, 245, 249, 0.5);
+            position: relative;
         }
 
         .rating-overview {
@@ -1224,7 +1083,7 @@
 
         /* Footer */
         footer {
-            background: rgba(15, 23, 42, 0.8);
+            background: rgba(248, 250, 252, 0.8);
             padding: 4rem 0 2rem;
             border-top: 1px solid var(--glass);
         }
@@ -1272,10 +1131,6 @@
             color: var(--gray);
             border-top: 1px solid var(--glass);
             margin-top: 3rem;
-        }
-
-        body.light-theme .footer-bottom {
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         /* Анимации */
@@ -1455,22 +1310,6 @@
     <div class="admin-panel" id="adminPanel">
         <h2 style="color: var(--primary); margin-bottom: 1.5rem;">Панель управления</h2>
         
-        <!-- Управление темой -->
-        <div class="admin-section">
-            <h3>Тема сайта</h3>
-            <div class="theme-selector">
-                <div class="theme-option active" data-theme="dark">
-                    <i class="fas fa-moon"></i><br>
-                    Темная
-                </div>
-                <div class="theme-option" data-theme="light">
-                    <i class="fas fa-sun"></i><br>
-                    Светлая
-                </div>
-            </div>
-            <button class="admin-btn" id="applyTheme">Применить тему</button>
-        </div>
-
         <!-- Управление фоном -->
         <div class="admin-section">
             <h3>Фон сайта</h3>
@@ -1491,13 +1330,13 @@
             <div id="gradientSettings">
                 <div class="admin-form-group">
                     <label>Цвет фона:</label>
-                    <input type="color" id="bgColor" class="admin-form-control" value="#0f172a">
-                    <span class="color-preview" id="bgColorPreview" style="background: #0f172a;"></span>
+                    <input type="color" id="bgColor" class="admin-form-control" value="#f1f5f9">
+                    <span class="color-preview" id="bgColorPreview" style="background: #f1f5f9;"></span>
                 </div>
                 <div class="admin-form-group">
                     <label>Градиент фона:</label>
-                    <input type="color" id="bgGradient" class="admin-form-control" value="#1e293b">
-                    <span class="color-preview" id="bgGradientPreview" style="background: #1e293b;"></span>
+                    <input type="color" id="bgGradient" class="admin-form-control" value="#e2e8f0">
+                    <span class="color-preview" id="bgGradientPreview" style="background: #e2e8f0;"></span>
                 </div>
             </div>
 
@@ -1941,7 +1780,6 @@
         let services = [];
         let galleryImages = [];
         let currentBgType = 'gradient'; // 'gradient' или 'image'
-        let currentTheme = 'dark'; // 'dark' или 'light'
         let bgImage = null;
         let bgOpacity = 0.8;
         
@@ -1963,7 +1801,6 @@
             const savedHero = loadFromLocalStorage('kommikHero');
             const savedContacts = loadFromLocalStorage('kommikContacts');
             const savedBackground = loadFromLocalStorage('kommikBackground');
-            const savedTheme = loadFromLocalStorage('kommikTheme');
             
             // Услуги по умолчанию
             if (!savedServices) {
@@ -2024,25 +1861,19 @@
                 document.getElementById('headerPhone').textContent = savedContacts.phone;
             }
             
-            // Тема
-            if (savedTheme) {
-                currentTheme = savedTheme;
-                setTheme(currentTheme);
-            }
-            
             // Фон
             if (savedBackground) {
                 currentBgType = savedBackground.type || 'gradient';
                 bgImage = savedBackground.image || null;
                 bgOpacity = savedBackground.opacity || 0.8;
                 
-                document.getElementById('bgColor').value = savedBackground.color || '#0f172a';
-                document.getElementById('bgGradient').value = savedBackground.gradient || '#1e293b';
+                document.getElementById('bgColor').value = savedBackground.color || '#f1f5f9';
+                document.getElementById('bgGradient').value = savedBackground.gradient || '#e2e8f0';
                 document.getElementById('bgOpacity').value = bgOpacity;
                 document.getElementById('opacityValue').textContent = Math.round(bgOpacity * 100) + '%';
                 
-                document.getElementById('bgColorPreview').style.background = savedBackground.color || '#0f172a';
-                document.getElementById('bgGradientPreview').style.background = savedBackground.gradient || '#1e293b';
+                document.getElementById('bgColorPreview').style.background = savedBackground.color || '#f1f5f9';
+                document.getElementById('bgGradientPreview').style.background = savedBackground.gradient || '#e2e8f0';
                 
                 // Установка активного типа фона
                 setBgType(currentBgType);
@@ -2087,42 +1918,9 @@
             }
         }
         
-        // Установка темы
-        function setTheme(theme) {
-            currentTheme = theme;
-            
-            // Обновление UI
-            document.querySelectorAll('.theme-option').forEach(option => {
-                option.classList.remove('active');
-            });
-            document.querySelector(`.theme-option[data-theme="${theme}"]`).classList.add('active');
-            
-            // Применение темы к body
-            if (theme === 'light') {
-                document.body.classList.add('light-theme');
-            } else {
-                document.body.classList.remove('light-theme');
-            }
-        }
-        
         // Открытие/закрытие админ-панели
         adminToggle.addEventListener('click', () => {
             adminPanel.classList.toggle('open');
-        });
-        
-        // ==================== УПРАВЛЕНИЕ ТЕМОЙ ====================
-        
-        // Обработчики для переключателя темы
-        document.querySelectorAll('.theme-option').forEach(option => {
-            option.addEventListener('click', function() {
-                setTheme(this.dataset.theme);
-            });
-        });
-        
-        document.getElementById('applyTheme').addEventListener('click', () => {
-            // Сохранение в localStorage
-            saveToLocalStorage('kommikTheme', currentTheme);
-            alert('Тема применена!');
         });
         
         // ==================== УПРАВЛЕНИЕ ФОНОМ ====================
